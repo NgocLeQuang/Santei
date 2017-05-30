@@ -46,6 +46,8 @@ namespace Natsu.MyForm
                 {
                     string id = idimage[j];
                     uc_Santei_Feedback ucF = new uc_Santei_Feedback();
+                    ucF.ucPictureBox1.FocusPicture += UcF_FocusPicture;
+                    ucF.ucPictureBox1.FocusPictureLeave += UcPictureBox1_FocusPictureLeave;
                     string url = Global.Webservice + cbb_batch.Text + "/" + id;
                     ucF.LoadImage(cbb_batch.Text, url, id);
 
@@ -67,6 +69,8 @@ namespace Natsu.MyForm
                 {
                     string id = idimage[j];
                     uc_Santei_Feedback ucF = new uc_Santei_Feedback();
+                    ucF.ucPictureBox1.FocusPicture += UcF_FocusPicture;
+                    ucF.ucPictureBox1.FocusPictureLeave += UcPictureBox1_FocusPictureLeave;
                     string url = Global.Webservice + cbb_batch.Text + "/" + id;
                     ucF.LoadImage(cbb_batch.Text, url, id);
 
@@ -95,6 +99,8 @@ namespace Natsu.MyForm
                 {
                     string id = idimage[j];
                     uc_Santei_Feedback ucF = new uc_Santei_Feedback();
+                    ucF.ucPictureBox1.FocusPicture += UcF_FocusPicture;
+                    ucF.ucPictureBox1.FocusPictureLeave += UcPictureBox1_FocusPictureLeave;
                     string url = Global.Webservice + cbb_batch.Text + "/" + id;
 
                     ucF.LoadImageUser(cbb_username.Text, cbb_batch.Text, url, id);
@@ -118,6 +124,8 @@ namespace Natsu.MyForm
                 {
                     string id = idimage[j];
                     uc_Santei_Feedback ucF = new uc_Santei_Feedback();
+                    ucF.ucPictureBox1.FocusPicture += UcF_FocusPicture;
+                    ucF.ucPictureBox1.FocusPictureLeave += UcPictureBox1_FocusPictureLeave;
                     string url = Global.Webservice + cbb_batch.Text + "/" + id;
                     ucF.LoadImageUser(cbb_username.Text, cbb_batch.Text, url, id);
 
@@ -134,15 +142,32 @@ namespace Natsu.MyForm
                 }
             }
         }
-        
+
+        private int _a;
+        private bool _b = true;
+        private void UcF_FocusPicture(object sender, EventArgs e)
+        {
+            _a = pnl_Mainfeedback1.VerticalScroll.Value;
+            _b = false;
+        }
+        private void UcPictureBox1_FocusPictureLeave(object sender, EventArgs e)
+        {
+            _b = true;
+        }
+
         private void frmFeedback_Load(object sender, EventArgs e)
         {
             cbb_batch.DataSource = Global.Db.GetBatch_Feedback_Getsu();
             cbb_batch.DisplayMember = "fBatchName";
             cbb_batch.ValueMember = "IDBatch";
             Num = 0;
+            pnl_Mainfeedback1.MouseWheel += Pnl_Mainfeedback1_MouseWheel;
         }
-
+        private void Pnl_Mainfeedback1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (!_b)
+                pnl_Mainfeedback1.VerticalScroll.Value = _a;
+        }
         private void btn_hienthi_Click(object sender, EventArgs e)
         {
             try
